@@ -1,0 +1,7 @@
+Links to ready templates used in the project:
+* Menu:
+https://www.bootdey.com/snippets/view/show-hide-top-menu
+
+* Models:
+model-list:
+https://www.bootdey.com/snippets/view/bs4-crud-users

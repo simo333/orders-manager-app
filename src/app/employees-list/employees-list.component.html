@@ -1,0 +1,439 @@
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+
+<div class="container-fluid" id="main-container">
+  <h2 class="text-center bg-violet p-2 text-light"><i class="bi bi-people-fill"></i> Pracownicy</h2>
+  <div class="row flex-lg-nowrap">
+    <div class="col-12 col-lg-auto mb-3" style="width: 200px;">
+      <div class="card p-3">
+        <div class="e-navlist e-navlist--active-bg">
+          <ul class="nav">
+            <li class="nav-item"><a class="nav-link px-2 active text-blue" href="#"><i
+              class="fa fa-fw fa-bar-chart mr-1"></i><span>Overview</span></a></li>
+            <li class="nav-item"><a class="nav-link px-2 text-blue"
+                                    href="https://www.bootdey.com/snippets/view/bs4-crud-users" target="__blank"><i
+              class="fa fa-fw fa-th mr-1"></i><span>CRUD</span></a></li>
+            <li class="nav-item"><a class="nav-link px-2 text-blue"
+                                    href="https://www.bootdey.com/snippets/view/bs4-edit-profile-page" target="__blank"><i
+              class="fa fa-fw fa-cog mr-1"></i><span>Settings</span></a></li>
+          </ul>
+        </div>
+      </div>
+    </div>
+
+    <div class="col">
+
+      <div class="row flex-lg-nowrap">
+        <div class="col mb-3">
+          <div class="e-panel card">
+            <div class="card-body">
+              <div class="e-table">
+                <div class="table-responsive table-lg mt-3">
+                  <table class="table table-bordered">
+                    <thead>
+                    <tr>
+                      <th class="max-width">Imię</th>
+                      <th>Nazwisko</th>
+                      <th>Stanowisko</th>
+                      <th>Akcje</th>
+                    </tr>
+                    </thead>
+                    <tbody>
+                    <tr *ngFor="
+                      let employee of employees | paginate: {
+                                              itemsPerPage: pageSize,
+                                              currentPage: page,
+                                              totalItems: count }">
+                      <td class="text-nowrap align-middle">{{employee.name}}</td>
+                      <td class="text-nowrap align-middle">{{employee.lastName}}</td>
+                      <td class="text-nowrap align-middle">{{employee.jobPosition.name}}</td>
+                      <td class="text-center align-middle">
+                        <div class="btn-group align-top">
+                          <button class="btn btn-sm btn-secondary text-white"
+                                  type="button"
+                                  (click)="routeToEmployeeDetails(employee.id)">
+                            <i class="bi bi-search"></i> Szczegóły
+                          </button>
+
+                          <button class="btn btn-sm btn-primary bg-blue text-white mx-1"
+                                  type="button"
+                                  data-toggle="modal"
+                                  data-target="#edit-employee-form-modal"
+                                  (click)="getEmployee(employee.id)">
+                            <i class="fa fa-pencil"></i>
+                          </button>
+                          <button class="btn btn-sm btn-danger text-white"
+                                  type="button"
+                                  data-toggle="modal"
+                                  data-target="#delete-employee-modal"
+                                  (click)="setActualEmployeeId(employee.id)">
+                            <i class="fa fa-trash"></i>
+                          </button>
+                        </div>
+                      </td>
+                    </tr>
+                    </tbody>
+                  </table>
+                </div>
+                <div class="text-center">
+                  <pagination-controls
+                    previousLabel=""
+                    nextLabel=""
+                    [responsive]="true"
+                    (pageChange)="handlePageChange($event)"
+                    [directionLinks]="true"
+                  >
+                  </pagination-controls>
+                </div>
+                <div class="mt-3">
+                  <h5>Pozycji na stronie:
+                    <select (change)="handlePageSizeChange($event)">
+                      <option *ngFor="let size of pageSizes" [ngValue]="size">
+                        {{ size }}
+                      </option>
+                    </select>
+                  </h5>
+                </div>
+
+              </div>
+            </div>
+          </div>
+        </div>
+        <div class="col-12 col-lg-3 mb-3">
+          <div class="card">
+            <div class="card-body">
+              <div class="text-center px-xl-3">
+                <button class="btn btn-dark btn-block bg-dblue" type="button" data-toggle="modal"
+                        data-target="#create-employee-form-modal">
+                  <i class="bi bi-plus-square"></i> Nowy pracownik
+                </button>
+              </div>
+              <hr class="my-3">
+              <div class="e-navlist e-navlist--active-bold">
+                <ul class="nav">
+                  <li class="nav-item active"><a href="" class="nav-link text-blue"><span>All</span>&nbsp;<small>/&nbsp;32</small></a>
+                  </li>
+                  <li class="nav-item"><a href=""
+                                          class="nav-link text-blue"><span>Active</span>&nbsp;<small>/&nbsp;16</small></a>
+                  </li>
+                  <li class="nav-item"><a href=""
+                                          class="nav-link text-blue"><span>Selected</span>&nbsp;<small>/&nbsp;0</small></a>
+                  </li>
+                </ul>
+              </div>
+              <hr class="my-3">
+            </div>
+          </div>
+        </div>
+      </div>
+
+
+
+      <!-- Create Employee Form Modal -->
+      <div class="modal fade" role="dialog" tabindex="-1" id="create-employee-form-modal">
+        <div class="modal-dialog" role="document">
+          <div class="modal-content">
+            <div class="modal-header">
+              <h5 class="modal-title">Dodaj nowego pracownika</h5>
+              <button type="button" class="close" data-dismiss="modal" #closeCEButton>
+                <span aria-hidden="true">×</span>
+              </button>
+            </div>
+            <div class="modal-body">
+              <div class="container-fluid">
+                <form (ngSubmit)="createEmployee()" #employeeForm="ngForm">
+                  <div class="form-row mb-2">
+                    <div class="col">
+                      <label for="name">Imię</label>
+                      <input type="text" [(ngModel)]="employee.name"
+                             class="form-control"
+                             id="name"
+                             name="name"
+                             placeholder="Wpisz imię"
+                             required #name="ngModel">
+                      <div [hidden]="!name.pristine" class="alert alert-danger p-1 mb-0">Imię jest wymagane</div>
+                    </div>
+                    <div class="col">
+                      <label for="lastName">Nazwisko</label>
+                      <input type="text" [(ngModel)]="employee.lastName"
+                             class="form-control"
+                             id="lastName"
+                             name="lastName"
+                             placeholder="Wpisz nazwisko"
+                             required #lastName="ngModel">
+                      <div [hidden]="!lastName.pristine" class="alert alert-danger p-1 mb-0">Nazwisko jest wymagane</div>
+                    </div>
+                  </div>
+                  <div class="form-row mb-2">
+                    <div class="form-group">
+                      <label for="date-of-birth">Data urodzin</label>
+                      <input type="date" [(ngModel)]="employee.dateOfBirth"
+                             class="form-control"
+                             id="date-of-birth"
+                             name="date-of-birth"
+                             placeholder="Podaj datę urodzin"
+                             required #dateOfBirth="ngModel">
+                      <div [hidden]="!dateOfBirth.pristine" class="alert alert-danger p-1 mb-0">Data urodzin jest wymagana</div>
+                    </div>
+                  </div>
+                  <div class="form-row mb-2">
+                    <div class="col">
+                      <label for="street">Ulica</label>
+                      <input type="text" [(ngModel)]="employee.street"
+                             class="form-control"
+                             id="street"
+                             name="street"
+                             placeholder="Wpisz adres, np. ul. Wolska 13"
+                             required #street="ngModel">
+                      <div [hidden]="!street.pristine" class="alert alert-danger p-1 mb-0">Adres jest wymagany</div>
+                    </div>
+                    <div class="col">
+                      <label for="zip-code">Kod pocztowy</label>
+                      <input type="text" [(ngModel)]="employee.zipCode"
+                             class="form-control"
+                             id="zip-code"
+                             name="zip-code"
+                             placeholder="Wpisz kod pocztowy"
+                             required #zipCode="ngModel">
+                      <div [hidden]="!zipCode.pristine" class="alert alert-danger p-1 mb-0">Kod pocztowy jest wymagany</div>
+                    </div>
+                  </div>
+                  <div class="form-row mb-2">
+                    <div class="col">
+                      <label for="city">Miejscowość</label>
+                      <input type="text" [(ngModel)]="employee.city"
+                             class="form-control"
+                             id="city"
+                             name="city"
+                             placeholder="Wpisz miejscowość"
+                             required #city="ngModel">
+                      <div [hidden]="!city.pristine" class="alert alert-danger p-1 mb-0">Miejscowość jest wymagana</div>
+                    </div>
+                    <div class="col">
+                      <label for="country">Kraj</label>
+                      <input type="text" [(ngModel)]="employee.country"
+                             class="form-control"
+                             id="country"
+                             name="country"
+                             placeholder="Wpisz kraj"
+                             required #country="ngModel">
+                      <div [hidden]="!country.pristine" class="alert alert-danger p-1 mb-0">Kraj jest wymagany</div>
+                    </div>
+                  </div>
+                  <div class="form-group">
+                    <label for="phone-number">Numer telefonu</label>
+                    <input type="text" [(ngModel)]="employee.phoneNumber"
+                           class="form-control"
+                           id="phone-number"
+                           name="phone-number"
+                           placeholder="Wpisz numer telefonu"
+                           required #phoneNumber="ngModel">
+                    <div [hidden]="!phoneNumber.pristine" class="alert alert-danger p-1">Numer telefonu jest wymagany</div>
+                  </div>
+                  <div class="form-row mb-2">
+                    <div class="col">
+                      <label for="contract-beginning">Data rozpoczęcia umowy</label>
+                      <input type="date" [(ngModel)]="employee.contractBeginning"
+                             class="form-control"
+                             id="contract-beginning"
+                             name="contract-beginning"
+                             placeholder="Podaj datę rozpoczęcia umowy">
+                    </div>
+                    <div class="col">
+                      <label for="contract-expiration">Data zakończenia umowy</label>
+                      <input type="date" [(ngModel)]="employee.contractExpiration"
+                             class="form-control"
+                             id="contract-expiration"
+                             name="contract-expiration"
+                             placeholder="Podaj datę zakończenia umowy">
+                    </div>
+                  </div>
+                  <div class="form-group">
+                    <label for="type-select">Stanowisko</label>
+                    <select class="form-select"
+                            name="type-select"
+                            id="type-select"
+                            [(ngModel)]="employee.jobPosition"
+                            required #jobPosition="ngModel">
+                      <option value="" disabled selected>Wybierz stanowisko</option>
+                      <option *ngFor="let jobPosition of jobPositions" [ngValue]="jobPosition">{{jobPosition.name}}</option>
+                    </select>
+                    <div [hidden]="!jobPosition.pristine" class="alert alert-danger p-1">Stanowisko jest wymagane</div>
+                  </div>
+                  <div class="row">
+                    <div class="col d-flex justify-content-end">
+                      <button type="submit" [disabled]="!employeeForm.form.valid"
+                              class="btn btn-primary">Gotowe
+                      </button>
+                    </div>
+                  </div>
+                </form>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Edit Employee Form Modal -->
+      <div class="modal fade" role="dialog" tabindex="-1" id="edit-employee-form-modal">
+        <div class="modal-dialog" role="document">
+          <div class="modal-content">
+            <div class="modal-header">
+              <h5 class="modal-title">Edytuj pracownika</h5>
+              <button type="button" class="close" data-dismiss="modal" #closeEEButton>
+                <span aria-hidden="true">×</span>
+              </button>
+            </div>
+            <div class="modal-body">
+              <div class="py-1">
+                <form (ngSubmit)="editEmployee()" #editEmployeeForm="ngForm">
+                  <div class="form-row mb-2">
+                    <div class="col">
+                      <label for="edit-name">Imię</label>
+                      <input type="text" [(ngModel)]="employee.name"
+                             class="form-control"
+                             id="edit-name"
+                             name="edit-name"
+                             placeholder="{{employee.name}}"
+                             required #name="ngModel">
+                      <div [hidden]="!name.pristine" class="alert alert-danger p-1 mb-0">Imię jest wymagane</div>
+                    </div>
+                    <div class="col">
+                      <label for="edit-lastName">Nazwisko</label>
+                      <input type="text" [(ngModel)]="employee.lastName"
+                             class="form-control"
+                             id="edit-lastName"
+                             name="edit-lastName"
+                             placeholder="{{employee.lastName}}"
+                             required #lastName="ngModel">
+                      <div [hidden]="!lastName.pristine" class="alert alert-danger p-1 mb-0">Nazwisko jest wymagane</div>
+                    </div>
+                  </div>
+                  <div class="form-row mb-2">
+                    <div class="form-group">
+                      <label for="date-of-birth">Data urodzin</label>
+                      <input type="date" [(ngModel)]="employee.dateOfBirth"
+                             class="form-control"
+                             id="edit-date-of-birth"
+                             name="edit-date-of-birth"
+                             placeholder="{{employee.dateOfBirth}}"
+                             required #dateOfBirth="ngModel">
+                      <div [hidden]="!dateOfBirth.pristine" class="alert alert-danger p-1 mb-0">Data urodzin jest wymagana</div>
+                    </div>
+                  </div>
+                  <div class="form-row mb-2">
+                    <div class="col">
+                      <label for="edit-street">Ulica</label>
+                      <input type="text" [(ngModel)]="employee.street"
+                             class="form-control"
+                             id="edit-street"
+                             name="edit-street"
+                             placeholder="{{employee.street}}"
+                             required #street="ngModel">
+                      <div [hidden]="!street.pristine" class="alert alert-danger p-1 mb-0">Adres jest wymagany</div>
+                    </div>
+                    <div class="col">
+                      <label for="edit-zip-code">Kod pocztowy</label>
+                      <input type="text" [(ngModel)]="employee.zipCode"
+                             class="form-control"
+                             id="edit-zip-code"
+                             name="edit-zip-code"
+                             placeholder="{{employee.zipCode}}"
+                             required #zipCode="ngModel">
+                      <div [hidden]="!zipCode.pristine" class="alert alert-danger p-1 mb-0">Kod pocztowy jest wymagany</div>
+                    </div>
+                  </div>
+                  <div class="form-row mb-2">
+                    <div class="col">
+                      <label for="edit-city">Miejscowość</label>
+                      <input type="text" [(ngModel)]="employee.city"
+                             class="form-control"
+                             id="edit-city"
+                             name="edit-city"
+                             placeholder="{{employee.city}}"
+                             required #city="ngModel">
+                      <div [hidden]="!city.pristine" class="alert alert-danger p-1 mb-0">Miejscowość jest wymagana</div>
+                    </div>
+                    <div class="col">
+                      <label for="edit-country">Kraj</label>
+                      <input type="text" [(ngModel)]="employee.country"
+                             class="form-control"
+                             id="edit-country"
+                             name="edit-country"
+                             placeholder="{{employee.country}}"
+                             required #country="ngModel">
+                      <div [hidden]="!country.pristine" class="alert alert-danger p-1 mb-0">Kraj jest wymagany</div>
+                    </div>
+                  </div>
+                  <div class="form-group">
+                    <label for="edit-phone-number">Numer telefonu</label>
+                    <input type="text" [(ngModel)]="employee.phoneNumber"
+                           class="form-control"
+                           id="edit-phone-number"
+                           name="edit-phone-number"
+                           placeholder="{{employee.phoneNumber}}"
+                           required #phoneNumber="ngModel">
+                    <div [hidden]="!phoneNumber.pristine" class="alert alert-danger p-1">Numer telefonu jest wymagany</div>
+                  </div>
+                  <div class="form-row mb-2">
+                    <div class="col">
+                      <label for="edit-contract-beginning">Data rozpoczęcia umowy</label>
+                      <input type="date" [(ngModel)]="employee.contractBeginning"
+                             class="form-control"
+                             id="edit-contract-beginning"
+                             name="edit-contract-beginning"
+                             placeholder="{{employee.contractBeginning}}">
+                    </div>
+                    <div class="col">
+                      <label for="edit-contract-expiration">Data zakończenia umowy</label>
+                      <input type="date" [(ngModel)]="employee.contractExpiration"
+                             class="form-control"
+                             id="edit-contract-expiration"
+                             name="edit-contract-expiration"
+                             placeholder="{{employee.contractExpiration}}">
+                    </div>
+                  </div>
+                  <div class="form-group">
+                    <label for="edit-type-select">Stanowisko</label>
+                    <select class="form-select"
+                            name="edit-type-select"
+                            id="edit-type-select"
+                            [(ngModel)]="employee.jobPosition"
+                            required #jobPosition="ngModel">
+                      <option value="" disabled selected>Wybierz stanowisko</option>
+                      <option *ngFor="let jobPosition of jobPositions" [ngValue]="jobPosition">{{jobPosition.name}}</option>
+                    </select>
+                    <div [hidden]="!jobPosition.pristine" class="alert alert-danger p-1">Stanowisko jest wymagane</div>
+                  </div>
+                  <div class="row">
+                    <div class="col d-flex justify-content-end">
+                      <button type="submit" [disabled]="!editEmployeeForm.form.valid"
+                              class="btn btn-primary">Gotowe
+                      </button>
+                    </div>
+                  </div>
+                </form>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!--Delete Employee Modal-->
+      <div class="modal fade" tabindex="-1" id="delete-employee-modal">
+        <div class="row">
+          <div class="modal-dialog alert-warning text-center p-3 rounded border border-danger border-3" role="document">
+            <h4 class="modal-heading text-dark">Czy na pewno chcesz usunąć?</h4>
+            <div class="modal-content">
+              <div class="btn-group">
+                <button type="button" class="btn btn-dark p-2" data-dismiss="modal" #closeDEButton>
+                  <span aria-hidden="true">Anuluj</span>
+                </button>
+                <button type="button" class="btn btn-danger p-2" (click)="deleteEmployee()">Usuń</button>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
