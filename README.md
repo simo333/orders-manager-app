@@ -1,6 +1,6 @@
 # OrdersManagerApp
 
-Front-end for Orders Manger.
+Front-end for Orders Manager.
 
 Full description: https://github.com/simo333/orders-manager#readme
 
