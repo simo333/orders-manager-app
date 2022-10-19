@@ -5,11 +5,11 @@ import {FormsModule, ReactiveFormsModule} from '@angular/forms';
 import {HttpClientModule} from '@angular/common/http';
 import {AppComponent} from './app.component';
 import {ModelListComponent} from "./model-list/model-list.component";
-import {ModelService} from "./model/model.service";
+import {ModelService} from "./services/model/model.service";
 import {BrowserAnimationsModule} from '@angular/platform-browser/animations';
 import {NgxPaginationModule} from 'ngx-pagination';
 import {ModelDetailsComponent} from './model-details/model-details.component';
-import {FurnitureTypeService} from "./furniture-type/furniture-type.service";
+import {FurnitureTypeService} from "./services/furniture-type/furniture-type.service";
 import { EmployeesListComponent } from './employees-list/employees-list.component';
 
 @NgModule({

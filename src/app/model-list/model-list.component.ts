@@ -1,11 +1,11 @@
 import {Component, Inject, OnInit, ViewChild} from '@angular/core';
-import {Model} from "../model/model";
-import {ModelService} from "../model/model.service";
+import {Model} from "../services/model/model";
+import {ModelService} from "../services/model/model.service";
 import {DOCUMENT} from "@angular/common";
 import {Router} from "@angular/router";
 import {Location} from "@angular/common";
-import {FurnitureType} from "../furniture-type/furnitureType";
-import {FurnitureTypeService} from "../furniture-type/furniture-type.service";
+import {FurnitureType} from "../services/furniture-type/furnitureType";
+import {FurnitureTypeService} from "../services/furniture-type/furniture-type.service";
 
 @Component({
   selector: 'app-model-list',

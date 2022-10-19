@@ -127,7 +127,6 @@
       </div>
 
 
-
       <!-- Create Employee Form Modal -->
       <div class="modal fade" role="dialog" tabindex="-1" id="create-employee-form-modal">
         <div class="modal-dialog" role="document">
@@ -160,7 +159,8 @@
                              name="lastName"
                              placeholder="Wpisz nazwisko"
                              required #lastName="ngModel">
-                      <div [hidden]="!lastName.pristine" class="alert alert-danger p-1 mb-0">Nazwisko jest wymagane</div>
+                      <div [hidden]="!lastName.pristine" class="alert alert-danger p-1 mb-0">Nazwisko jest wymagane
+                      </div>
                     </div>
                   </div>
                   <div class="form-row mb-2">
@@ -172,7 +172,9 @@
                              name="date-of-birth"
                              placeholder="Podaj datę urodzin"
                              required #dateOfBirth="ngModel">
-                      <div [hidden]="!dateOfBirth.pristine" class="alert alert-danger p-1 mb-0">Data urodzin jest wymagana</div>
+                      <div [hidden]="!dateOfBirth.pristine" class="alert alert-danger p-1 mb-0">Data urodzin jest
+                        wymagana
+                      </div>
                     </div>
                   </div>
                   <div class="form-row mb-2">
@@ -194,7 +196,8 @@
                              name="zip-code"
                              placeholder="Wpisz kod pocztowy"
                              required #zipCode="ngModel">
-                      <div [hidden]="!zipCode.pristine" class="alert alert-danger p-1 mb-0">Kod pocztowy jest wymagany</div>
+                      <div [hidden]="!zipCode.pristine" class="alert alert-danger p-1 mb-0">Kod pocztowy jest wymagany
+                      </div>
                     </div>
                   </div>
                   <div class="form-row mb-2">
@@ -227,7 +230,8 @@
                            name="phone-number"
                            placeholder="Wpisz numer telefonu"
                            required #phoneNumber="ngModel">
-                    <div [hidden]="!phoneNumber.pristine" class="alert alert-danger p-1">Numer telefonu jest wymagany</div>
+                    <div [hidden]="!phoneNumber.pristine" class="alert alert-danger p-1">Numer telefonu jest wymagany
+                    </div>
                   </div>
                   <div class="form-row mb-2">
                     <div class="col">
@@ -255,7 +259,8 @@
                             [(ngModel)]="employee.jobPosition"
                             required #jobPosition="ngModel">
                       <option value="" disabled selected>Wybierz stanowisko</option>
-                      <option *ngFor="let jobPosition of jobPositions" [ngValue]="jobPosition">{{jobPosition.name}}</option>
+                      <option *ngFor="let jobPosition of jobPositions"
+                              [ngValue]="jobPosition">{{jobPosition.name}}</option>
                     </select>
                     <div [hidden]="!jobPosition.pristine" class="alert alert-danger p-1">Stanowisko jest wymagane</div>
                   </div>
@@ -305,7 +310,8 @@
                              name="edit-lastName"
                              placeholder="{{employee.lastName}}"
                              required #lastName="ngModel">
-                      <div [hidden]="!lastName.pristine" class="alert alert-danger p-1 mb-0">Nazwisko jest wymagane</div>
+                      <div [hidden]="!lastName.pristine" class="alert alert-danger p-1 mb-0">Nazwisko jest wymagane
+                      </div>
                     </div>
                   </div>
                   <div class="form-row mb-2">
@@ -317,7 +323,9 @@
                              name="edit-date-of-birth"
                              placeholder="{{employee.dateOfBirth}}"
                              required #dateOfBirth="ngModel">
-                      <div [hidden]="!dateOfBirth.pristine" class="alert alert-danger p-1 mb-0">Data urodzin jest wymagana</div>
+                      <div [hidden]="!dateOfBirth.pristine" class="alert alert-danger p-1 mb-0">Data urodzin jest
+                        wymagana
+                      </div>
                     </div>
                   </div>
                   <div class="form-row mb-2">
@@ -339,7 +347,8 @@
                              name="edit-zip-code"
                              placeholder="{{employee.zipCode}}"
                              required #zipCode="ngModel">
-                      <div [hidden]="!zipCode.pristine" class="alert alert-danger p-1 mb-0">Kod pocztowy jest wymagany</div>
+                      <div [hidden]="!zipCode.pristine" class="alert alert-danger p-1 mb-0">Kod pocztowy jest wymagany
+                      </div>
                     </div>
                   </div>
                   <div class="form-row mb-2">
@@ -372,7 +381,8 @@
                            name="edit-phone-number"
                            placeholder="{{employee.phoneNumber}}"
                            required #phoneNumber="ngModel">
-                    <div [hidden]="!phoneNumber.pristine" class="alert alert-danger p-1">Numer telefonu jest wymagany</div>
+                    <div [hidden]="!phoneNumber.pristine" class="alert alert-danger p-1">Numer telefonu jest wymagany
+                    </div>
                   </div>
                   <div class="form-row mb-2">
                     <div class="col">
@@ -400,7 +410,8 @@
                             [(ngModel)]="employee.jobPosition"
                             required #jobPosition="ngModel">
                       <option value="" disabled selected>Wybierz stanowisko</option>
-                      <option *ngFor="let jobPosition of jobPositions" [ngValue]="jobPosition">{{jobPosition.name}}</option>
+                      <option *ngFor="let jobPosition of jobPositions"
+                              [ngValue]="jobPosition">{{jobPosition.name}}</option>
                     </select>
                     <div [hidden]="!jobPosition.pristine" class="alert alert-danger p-1">Stanowisko jest wymagane</div>
                   </div>

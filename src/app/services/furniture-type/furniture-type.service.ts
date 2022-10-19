@@ -24,7 +24,7 @@ export class FurnitureTypeService {
   }
 
   public updateFurnitureType(type: FurnitureType): Observable<FurnitureType> {
-    return this.http.put<FurnitureType>(this.furnitureTypesUrl, type);
+    return this.http.put<FurnitureType>(this.furnitureTypesUrl + `/${type.id}`, type);
   }
 
   public deleteFurnitureType(typeId: number): Observable<void> {

@@ -1,10 +1,10 @@
 import {Component, Inject, OnInit, ViewChild} from '@angular/core';
-import {Employee} from "../employee/employee";
-import {JobPosition} from "../job-position/jobPosition";
+import {Employee} from "../services/employee/employee";
+import {JobPosition} from "../services/job-position/jobPosition";
 import {Router} from "@angular/router";
 import {DOCUMENT, Location} from "@angular/common";
-import {EmployeeService} from "../employee/employee.service";
-import {JobPositionService} from "../job-position/job-position.service";
+import {EmployeeService} from "../services/employee/employee.service";
+import {JobPositionService} from "../services/job-position/job-position.service";
 
 @Component({
   selector: 'app-employees-list',

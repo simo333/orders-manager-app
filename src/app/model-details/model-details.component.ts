@@ -1,6 +1,6 @@
 import {Component, OnInit} from '@angular/core';
-import {ModelService} from "../model/model.service";
-import {Model} from "../model/model";
+import {ModelService} from "../services/model/model.service";
+import {Model} from "../services/model/model";
 
 @Component({
   selector: 'app-model-details',
