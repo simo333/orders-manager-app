@@ -2,4 +2,6 @@
 
 Front-end for Orders Manger.
 
-Angular
+Full description: https://github.com/simo333/orders-manager#readme
+
+Link to back-end repo: https://github.com/simo333/orders-manager
