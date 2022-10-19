@@ -10,10 +10,10 @@ import {Model} from "../services/model/model";
 export class ModelDetailsComponent implements OnInit {
 
   model: Model = new Model();
-  actualModelId!: number;
+  actualModelId: number;
 
   constructor(private modelService: ModelService) {
-
+    this.actualModelId = this.modelService.getModelId();
   }
 
   ngOnInit(): void {
@@ -26,12 +26,6 @@ export class ModelDetailsComponent implements OnInit {
       this.model = response;
       console.log("ModelDetailsComponent.getModel() -> " + this.model.name);
     });
-  }
-
-  // Set modelId from model list to provide it for deleteModel() method
-  setActualModelId(modelId: number) {
-    this.actualModelId = modelId;
-    console.log("Actual modelId: " + this.actualModelId);
   }
 
 }

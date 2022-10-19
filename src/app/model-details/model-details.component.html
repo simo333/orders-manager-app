@@ -1,18 +1,15 @@
-<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.12.1/css/all.min.css"/>
-
 <div class="container">
   <div class="row">
     <div class="col-md-5">
       <div class="project-info-box mt-0">
         <h5>{{model.name}}</h5>
-<!--        <p class="mb-0">Vivamus pellentesque, felis in aliquam ullamcorper, lorem tortor porttitor erat, hendrerit porta nunc tellus eu lectus. Ut vel imperdiet est. Pellentesque condimentum, dui et blandit laoreet, quam nisi tincidunt tortor.</p>-->
-      </div><!-- / project-info-box -->
+      </div>
 
       <div class="project-info-box">
         <p><b>Nazwa:</b> {{model.name}}</p>
         <p><b>Nazwa wewnętrzna:</b> {{model.innerName}}</p>
         <p><b>Typ:</b> {{model.type.name}}</p>
-      </div><!-- / project-info-box -->
+      </div>
 
       <div class="project-info-box mt-0 mb-0">
         <p class="mb-0 text-center">
@@ -26,23 +23,22 @@
           <button class="btn btn btn-danger text-white"
                   type="button"
                   data-toggle="modal"
-                  data-target="#delete-model-modal"
-                  (click)="setActualModelId(model.id)">
+                  data-target="#delete-model-modal">
                   <i class="fa fa-trash"></i> Usuń
           </button>
         </p>
-      </div><!-- / project-info-box -->
-    </div><!-- / column -->
+      </div>
+    </div>
 
 
     <div class="col-md-7">
       <img src="https://via.placeholder.com/400x300/FFB6C1/000000" alt="project-image" class="rounded">
       <button class="btn btn-primary mt-3" type="button" data-toggle="collapse" data-target="#pricing-div" aria-expanded="false"><i class="fa fa-bars"></i> Stawki</button>
       <div class="project-info-box collapse mt-0" id="pricing-div">
-        <p><b>Tapicerzy:</b> Design, Illustration</p>
-        <p><b>Piankowi:</b> Illustrator</p>
-        <p><b>Szwaczki:</b> Illustrator</p>
-      </div><!-- / project-info-box -->
-    </div><!-- / column -->
+        <p><b>Tapicerzy:</b> 120 zł</p>
+        <p><b>Piankowi:</b> 60 zł</p>
+        <p><b>Szwaczki:</b> 70 zł</p>
+      </div>
+    </div>
   </div>
 </div>
